@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Summary Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 16px;
+        }
+        .navbar a {
+            color: #f2f2f2;
+            text-align: center;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .navbar .button:hover {
+            background-color: #45a049;
+        }
+        .navbar .summary-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f2f2f2;
+        }
+        table.custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table.custom-table th, table.custom-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table.custom-table th {
+            background-color: #f2f2f2;
+        }
+        table.custom-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table.custom-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h4 class="summary-title">Summary Report</h4>
+        <a href="{% url 'upload_file' %}" class="button">Upload New File</a>
+    </div>
+    
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>Cust State</th>
+                <th>Cust Pin</th>
+                <th>DPD</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in summary %}
+            <tr>
+                <td>{{ row.CustState }}</td>
+                <td>{{ row.CustPin }}</td>
+                <td>{{ row.DPD }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

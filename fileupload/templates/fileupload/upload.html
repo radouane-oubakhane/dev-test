@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload File</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .container h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container form p {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .container form input[type="file"] {
+            display: none;
+        }
+        .container form .custom-file-upload {
+            background-color: #007bff; /* Changed color to blue */
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            flex: 1;
+            text-align: center;
+        }
+        .container form .custom-file-upload:hover {
+            background-color: #0056b3; /* Darker shade of blue */
+        }
+        .container form .file-name {
+            font-size: 14px;
+            color: #555;
+            margin-left: 10px;
+            word-wrap: break-word;
+            flex: 1;
+            text-align: center;
+        }
+        .container form button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .container form button:hover {
+            background-color: #4cae4c;
+        }
+        .container form button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload File</h1>
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <p>
+                <label for="id_file" class="custom-file-upload">Choose File</label>
+                <input type="file" name="file" id="id_file" onchange="updateFileName()">
+                <span class="file-name" id="file-name">No file chosen</span>
+            </p>
+            <button type="submit" id="upload-button" disabled>Upload</button>
+        </form>
+    </div>
+    <script>
+        function updateFileName() {
+            const input = document.getElementById('id_file');
+            const fileName = document.getElementById('file-name');
+            const uploadButton = document.getElementById('upload-button');
+            if (input.files.length > 0) {
+                fileName.textContent = input.files[0].name;
+                uploadButton.disabled = false;
+            } else {
+                fileName.textContent = 'No file chosen';
+                uploadButton.disabled = true;
+            }
+        }
+
+        function validateForm() {
+            const input = document.getElementById('id_file');
+            if (input.files.length === 0) {
+                alert('Please choose a file to upload.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
